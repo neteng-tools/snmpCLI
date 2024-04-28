@@ -49,6 +49,7 @@ C:\windows\system32>.\snmpCLI.exe -h
                 -v 2c
                 -v 3 (default "3")
 ```
+```
   -vv
         Enable verbose output
 
