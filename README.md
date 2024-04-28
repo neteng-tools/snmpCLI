@@ -1,6 +1,7 @@
 # snmpCLI
 CLI snmp scanner tool that supports cisco AES256. You can scan one device or an entire network!
 ```
+C:\windows\system32>snmpCLI.exe -h
 -a string
         Provide Authentication Password
   -at string
@@ -21,4 +22,7 @@ CLI snmp scanner tool that supports cisco AES256. You can scan one device or an 
         Set snmp version. -v 1, -v 2c, -v 3 (default "3")
   -vv
         Enable verbose output
+
+Example: .\snmpCLI.exe -t 10.0.0.1-254 -c "User" -p "PrivacyPass" -pt "AES256" -a "AuthPass" -at "SHA256" 
 ```
+The above example makes a call to every IP in the 10. range specified with the given credentials with a GET request to 1.3.6.1.2.1.1.1.0 which will look for snmpDeviceName. If you're using the base auth/priv types you don't need to specify them. 
