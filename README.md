@@ -1,7 +1,7 @@
 # snmpCLI
 CLI snmp scanner tool that supports cisco AES256. You can scan one device or an entire network!
 ```
-C:\windows\system32>snmpCLI.exe -h
+C:\windows\system32>.\snmpCLI.exe -h
 -a string
         Provide Authentication Password
   -at string
