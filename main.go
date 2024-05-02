@@ -72,7 +72,7 @@ func main() {
 	input.AuthType = flag.String("at", "SHA", "Enter SNMPv3 Auth Type.\n\t-at SHA\n\t-at SHA256\n\t-at SHA512")
 	input.Oid = flag.String("o", "1.3.6.1.2.1.1.1.0", `Enter OIDs to grab separated by a comma. You can also use this for a Walk (walk default "1.3.6")`)
 	input.Verbose = flag.Bool("vv", false, "Enable verbose output\n\nEx: .\\snmpCLI.exe -t 10.0.0.0-150 -c v3User -m Get -v 3 -p PrivPass -pt AES256 -a AuthPass -at SHA512 -o 1.3.6.1.2.1.1.1.0")
-	input.LineSize = flag.Int("n", 50, "Specifies lines to print during a walk. Lower number results in faster response, but slower walk. Higher number reduces the overall time a walk takes. Use more than 1000 if you're redirecting output to a file.\n-n 50\n-n 1000")
+	input.LineSize = flag.Int("n", 50, "Specifies lines to print during a walk. Lower number results in faster response, but slower walk. \nHigher number reduces the overall time a walk takes. Use more than 1000 if you're redirecting output to a file.\n\t-n 50\n\t-n 1000")
 
 	creds.Username = flag.String("c", "public", "Set snmp community string or v3 User Name.\n\t-c v3User")
 	creds.Auth = flag.String("a", "", "Provide Authentication Password")
