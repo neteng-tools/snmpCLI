@@ -2,7 +2,7 @@
 CLI snmp scanner tool that supports cisco AES256. You can scan one device or an entire network!
 ```
 C:\windows\system32>.\snmpCLI.exe -h
--a string
+  -a string
         Provide Authentication Password
 ```
 ```
@@ -22,6 +22,13 @@ C:\windows\system32>.\snmpCLI.exe -h
         Set snmp method.
                 -m Get
                 -m Walk. (default "Get")
+```
+```
+  -n int
+        Specifies lines to print during a walk. Lower number results in faster response, but slower walk.
+        Higher number reduces the overall time a walk takes. Use more than 1000 if you're redirecting output to a file.
+                -n 50
+                -n 1000
 ```
 ```
   -o string
