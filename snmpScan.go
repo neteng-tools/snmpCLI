@@ -82,8 +82,12 @@ func snmpScan(target string, creds snmpCreds, input snmpInput) {
 	}
 	defer params.Conn.Close()
 	if *input.Method == "Walk" {
+		//basically says to change default if not specified. This OID is currently the default for a Get request. Probably needs to be done better
+		if *input.Oid == "1.3.6.1.2.1.1.1.0" {
+			*input.Oid = "1.3.6"
+		}
 		if *input.Verbose {
-			fmt.Println("Walking devices")
+			fmt.Println("Walking devices from: " + *input.Oid)
 		}
 		var count int
 		var walkPayLoad bytes.Buffer
@@ -122,7 +126,7 @@ func snmpScan(target string, creds snmpCreds, input snmpInput) {
 				walkPayLoad.WriteString(fmt.Sprint(v))
 				walkPayLoad.WriteString(reflect.TypeOf(v).Name() + "\n")
 			}
-			if count > 300 {
+			if count > *input.LineSize {
 				fmt.Println(walkPayLoad.String())
 				count = 0
 				walkPayLoad.Reset()

@@ -58,6 +58,7 @@ type snmpInput struct {
 	PrivType *string
 	Oid      *string
 	Verbose  *bool
+	LineSize *int
 }
 
 func main() {
@@ -69,8 +70,9 @@ func main() {
 	input.Version = flag.String("v", "3", "Set snmp version.\n\t-v 1\n\t-v 2c\n\t-v 3")
 	input.PrivType = flag.String("pt", "AES", "Enter SNMPv3 Priv Type.\n\t-pt AES\n\t-pt AES192\n\t-pt AES256")
 	input.AuthType = flag.String("at", "SHA", "Enter SNMPv3 Auth Type.\n\t-at SHA\n\t-at SHA256\n\t-at SHA512")
-	input.Oid = flag.String("o", "1.3.6.1.2.1.1.1.0", "Enter OIDs to grab separated by a comma. You can also use this for a Walk (Ex. 1.3.6)")
+	input.Oid = flag.String("o", "1.3.6.1.2.1.1.1.0", `Enter OIDs to grab separated by a comma. You can also use this for a Walk (walk default "1.3.6")`)
 	input.Verbose = flag.Bool("vv", false, "Enable verbose output\n\nEx: .\\snmpCLI.exe -t 10.0.0.0-150 -c v3User -m Get -v 3 -p PrivPass -pt AES256 -a AuthPass -at SHA512 -o 1.3.6.1.2.1.1.1.0")
+	input.LineSize = flag.Int("n", 50, "Specifies lines to print during a walk. Lower number results in faster response, but slower walk. Higher number reduces the overall time a walk takes. Use more than 1000 if you're redirecting output to a file.\n-n 50\n-n 1000")
 
 	creds.Username = flag.String("c", "public", "Set snmp community string or v3 User Name.\n\t-c v3User")
 	creds.Auth = flag.String("a", "", "Provide Authentication Password")
@@ -81,9 +83,11 @@ func main() {
 	var waitGroup sync.WaitGroup
 	count := 0
 	ipList := strings.Split(*ipAdd, ",")
-
 	for _, ipGate := range ipList {
 		netID := strings.Split(ipGate, ".")
+		if len(netID) < 3 {
+			log.Fatal("Provided IP Address is incorrect or malformed. Please retry.")
+		}
 		netRangeSlice := strings.Split(netID[3], "-")
 		var netRangeEnd int
 		netRangeStart, err := strconv.Atoi(netRangeSlice[0])
